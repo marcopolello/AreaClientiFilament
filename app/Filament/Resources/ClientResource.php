@@ -48,7 +48,23 @@ class ClientResource extends Resource
                     ]),
                 Forms\Components\Select::make('owner_id')
                     ->relationship('owner', 'name')
-                    ->required(),
+                    ->searchable()
+                    ->preload()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->label('Email address')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('phone')
+                            ->label('Phone number')
+                            ->tel()
+                            ->required(),
+                    ])
+                    ->required()
             ]);
     }
 
@@ -56,10 +72,20 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('codice_cliente')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('categoria_cliente'),
+                Tables\Columns\TextColumn::make('owner.name')
+                    ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('categoria_cliente')
+                    ->options([
+                        'premium' => 'Premium',
+                        'standard' => 'Standard',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
