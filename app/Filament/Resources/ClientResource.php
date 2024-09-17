@@ -23,11 +23,32 @@ class ClientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('codice_cliente'),
-                Forms\Components\TextInput::make('ragione_sociale'),
-                Forms\Components\TextInput::make('indirizzo'),
-                Forms\Components\TextInput::make('codice_fiscale'),
-                Forms\Components\TextInput::make('categoria_cliente'),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('codice_cliente')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('ragione_sociale')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('indirizzo')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('codice_fiscale')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('categoria_cliente')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Select::make('categoria_cliente')
+                    ->options([
+                        'premium' => 'Premium',
+                        'standard' => 'Standard',
+                    ]),
+                Forms\Components\Select::make('owner_id')
+                    ->relationship('owner', 'name')
+                    ->required(),
             ]);
     }
 

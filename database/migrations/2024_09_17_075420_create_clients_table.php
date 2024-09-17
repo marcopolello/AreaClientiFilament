@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->date('date_of_birth');
+            $table->string('codice_cliente');
+            $table->foreignId('owner_id')->constrained('owners');
+            $table->string('ragione_sociale');
+            $table->string('indirizzo');
+            $table->string('codice_fiscale');
+            $table->string('categoria_cliente');
             $table->string('name');
-            $table->foreignId('owner_id')->constrained('owners')->cascadeOnDelete();
-            $table->string('type');
             $table->timestamps();
         });
     }
