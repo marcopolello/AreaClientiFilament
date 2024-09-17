@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Owner extends Model
+class Client extends Model
 {
     use HasFactory;
 
-    public function clients(): HasMany
+    public function owner(): BelongsTo
     {
-        return $this->hasMany(Client::class);
+        return $this->belongsTo(Owner::class);
+    }
+
+    public function treatments(): HasMany
+    {
+        return $this->hasMany(Treatment::class);
     }
 }

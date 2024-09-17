@@ -40,5 +40,8 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(! app()->isProduction());
 
         $this->translatableComponents();
+
+        //disattivato Laravel's mass assignment protection => https://laravel.com/docs/11.x/eloquent#mass-assignment
+        Model::unguard();
     }
 }
